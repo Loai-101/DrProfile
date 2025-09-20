@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import emailjs from '@emailjs/browser';
 
 const DoctorProfile = () => {
@@ -21,6 +21,8 @@ const DoctorProfile = () => {
     satisfaction: 0,
     emergency: 0
   });
+  const [visibleElements, setVisibleElements] = useState(new Set());
+  const elementRefs = useRef({});
 
   const targetCounts = {
     experience: 15,
@@ -37,6 +39,35 @@ const DoctorProfile = () => {
 
     return () => clearTimeout(loadingTimer);
   }, []);
+
+  // Scroll animation observer
+  useEffect(() => {
+    if (isLoading) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setVisibleElements(prev => new Set([...prev, entry.target.id]));
+            // Add visible class to trigger animation
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
+
+    // Small delay to ensure DOM is ready
+    const timer = setTimeout(() => {
+      const elements = document.querySelectorAll('.animate-on-scroll');
+      elements.forEach(el => observer.observe(el));
+    }, 100);
+
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
+  }, [isLoading]);
 
   useEffect(() => {
     if (!isLoading) {
@@ -156,97 +187,97 @@ const DoctorProfile = () => {
         </div>
       )}
 
-      <div className="profile-header">
-        <div className="profile-info">
-              <h1>Dr. Alexis Jon</h1>
-          <h2>Cardiologist</h2>
-          <p className="specialty">MD, FACC - Board Certified Cardiologist</p>
-          <div className="contact-info">
-            <p><i className="fas fa-phone"></i> Phone: 13676757</p>
-            <p><i className="fas fa-envelope"></i> Email: dr.jon@medicalcenter.com</p>
-            <p><i className="fas fa-map-marker-alt"></i> Location: Bahrain, Seef District</p>
+          <div className="profile-header animate-fadeIn">
+            <div className="profile-info animate-fadeInUp animate-delay-1">
+                  <h1 className="animate-fadeInUp animate-delay-2">Dr. Alexis Jon</h1>
+              <h2 className="animate-fadeInUp animate-delay-3">Cardiologist</h2>
+              <p className="specialty animate-fadeInUp animate-delay-4">MD, FACC - Board Certified Cardiologist</p>
+              <div className="contact-info animate-fadeInUp animate-delay-5">
+                <p><i className="fas fa-phone"></i> Phone: 13676757</p>
+                <p><i className="fas fa-envelope"></i> Email: dr.jon@medicalcenter.com</p>
+                <p><i className="fas fa-map-marker-alt"></i> Location: Bahrain, Seef District</p>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
-      <div className="moving-bar">
-        <div className="moving-text">A healthy heart is the key to a long and active life. • Taking care of your heart today prevents problems tomorrow. • Heart health is the foundation of overall wellness. • Regular check-ups help keep your heart strong and safe. • Small lifestyle changes can make a big difference for your heart. • Protect your heart to protect your future. • Early detection saves lives — don't ignore heart symptoms. • Exercise and a balanced diet keep your heart in rhythm. • Stress management is essential for a healthy heart. • Your heart works for you every second — give it the care it deserves.</div>
+      <div className="moving-bar animate-slideInDown">
+        <div className="moving-text animate-shimmer">A healthy heart is the key to a long and active life. • Taking care of your heart today prevents problems tomorrow. • Heart health is the foundation of overall wellness. • Regular check-ups help keep your heart strong and safe. • Small lifestyle changes can make a big difference for your heart. • Protect your heart to protect your future. • Early detection saves lives — don't ignore heart symptoms. • Exercise and a balanced diet keep your heart in rhythm. • Stress management is essential for a healthy heart. • Your heart works for you every second — give it the care it deserves.</div>
       </div>
 
       <div className="profile-content">
-        <div className="content-section about-section">
+        <div className="content-section about-section animate-on-scroll" id="about-section">
           <div className="about-content">
-            <div className="about-text">
-                  <h3><i className="fas fa-user-md"></i> About Dr. Alexis Jon</h3>
-              <p>
-                Dr. Alexis Jon is a highly experienced cardiologist with over 15 years of practice 
-                in cardiovascular medicine. She specializes in interventional cardiology, heart failure 
-                management, and preventive cardiology.
-              </p>
-              <p>
-                Dr. Jon is committed to providing personalized care and staying at the forefront 
-                of cardiovascular treatment innovations. Her approach combines cutting-edge medical 
-                technology with compassionate patient care.
-              </p>
-              <button className="consultation-btn">
-                <i className="fas fa-calendar-check"></i>
-                Book Consultation
-              </button>
+            <div className="about-text animate-fadeInLeft">
+                      <h3><i className="fas fa-user-md animate-pulse"></i> About Dr. Alexis Jon</h3>
+                  <p>
+                    Dr. Alexis Jon is a highly experienced cardiologist with over 15 years of practice 
+                    in cardiovascular medicine. She specializes in interventional cardiology, heart failure 
+                    management, and preventive cardiology.
+                  </p>
+                  <p>
+                    Dr. Jon is committed to providing personalized care and staying at the forefront 
+                    of cardiovascular treatment innovations. Her approach combines cutting-edge medical 
+                    technology with compassionate patient care.
+                  </p>
+                  <button className="consultation-btn animate-bounceIn animate-delay-3">
+                    <i className="fas fa-calendar-check"></i>
+                    Book Consultation
+                  </button>
+                </div>
+                <div className="about-image animate-fadeInRight">
+                  <img 
+                    src="https://res.cloudinary.com/dvybb2xnc/image/upload/v1758014927/Screenshot_2025-09-16_122837_lrgg8o.png" 
+                    alt="Medical consultation and testing" 
+                    className="medical-image animate-float"
+                  />
+                </div>
+              </div>
             </div>
-            <div className="about-image">
-              <img 
-                src="https://res.cloudinary.com/dvybb2xnc/image/upload/v1758014927/Screenshot_2025-09-16_122837_lrgg8o.png" 
-                alt="Medical consultation and testing" 
-                className="medical-image"
-              />
-            </div>
-          </div>
-        </div>
 
-        <div className="content-section stats-section">
+        <div className="content-section stats-section animate-on-scroll" id="stats-section">
           <div className="stats-dashboard">
-            <div className="stat-card">
-              <div className="stat-number">{counts.experience}+</div>
+            <div className="stat-card animate-scaleIn animate-delay-1">
+              <div className="stat-number animate-pulse">{counts.experience}+</div>
               <div className="stat-label">YEARS EXPERIENCE</div>
             </div>
-            <div className="stat-card">
-              <div className="stat-number">{counts.patients}+</div>
+            <div className="stat-card animate-scaleIn animate-delay-2">
+              <div className="stat-number animate-pulse">{counts.patients}+</div>
               <div className="stat-label">HAPPY PATIENTS</div>
             </div>
-            <div className="stat-card">
-              <div className="stat-number">98%</div>
+            <div className="stat-card animate-scaleIn animate-delay-3">
+              <div className="stat-number animate-pulse">98%</div>
               <div className="stat-label">SATISFACTION RATE</div>
             </div>
-            <div className="stat-card">
-              <div className="stat-number">24/7</div>
+            <div className="stat-card animate-scaleIn animate-delay-4">
+              <div className="stat-number animate-pulse">24/7</div>
               <div className="stat-label">EMERGENCY CARDIAC CARE</div>
             </div>
           </div>
         </div>
 
-        <div className="content-section blood-test-section">
+        <div className="content-section blood-test-section animate-on-scroll" id="blood-test-section">
           <div className="blood-test-content">
-            <div className="blood-test-text">
-              <h3><i className="fas fa-vial"></i> Importance of Blood Tests</h3>
+            <div className="blood-test-text animate-fadeInLeft">
+              <h3><i className="fas fa-vial animate-pulse"></i> Importance of Blood Tests</h3>
               <p>
                 Blood tests are essential diagnostic tools that provide crucial insights into your overall health. 
                 They help detect diseases early, monitor existing conditions, and assess your body's functioning.
               </p>
               <div className="blood-test-benefits">
-                <div className="benefit-item">
-                  <i className="fas fa-search"></i>
+                <div className="benefit-item animate-fadeInUp animate-delay-1">
+                  <i className="fas fa-search animate-pulse"></i>
                   <span>Early Disease Detection</span>
                 </div>
-                <div className="benefit-item">
-                  <i className="fas fa-heartbeat"></i>
+                <div className="benefit-item animate-fadeInUp animate-delay-2">
+                  <i className="fas fa-heartbeat animate-pulse"></i>
                   <span>Heart Health Monitoring</span>
                 </div>
-                <div className="benefit-item">
-                  <i className="fas fa-chart-line"></i>
+                <div className="benefit-item animate-fadeInUp animate-delay-3">
+                  <i className="fas fa-chart-line animate-pulse"></i>
                   <span>Treatment Progress</span>
                 </div>
-                <div className="benefit-item">
-                  <i className="fas fa-shield-alt"></i>
+                <div className="benefit-item animate-fadeInUp animate-delay-4">
+                  <i className="fas fa-shield-alt animate-pulse"></i>
                   <span>Preventive Care</span>
                 </div>
               </div>
@@ -255,68 +286,68 @@ const DoctorProfile = () => {
                 allowing for early intervention and better treatment outcomes.
               </p>
             </div>
-            <div className="blood-test-image">
+            <div className="blood-test-image animate-fadeInRight">
               <img 
                 src="https://res.cloudinary.com/dvybb2xnc/image/upload/v1758014233/Screenshot_2025-09-16_121533_rozrbd.png" 
                 alt="Blood Test" 
-                className="blood-test-img"
+                className="blood-test-img animate-float"
               />
             </div>
           </div>
         </div>
 
-        <div className="content-section">
-          <h3><i className="fas fa-graduation-cap"></i> Education & Training</h3>
+        <div className="content-section animate-on-scroll" id="education-section">
+          <h3><i className="fas fa-graduation-cap animate-pulse"></i> Education & Training</h3>
           <ul>
-            <li><strong>Medical Degree:</strong> Harvard Medical School (2005)</li>
-            <li><strong>Residency:</strong> Internal Medicine - Johns Hopkins Hospital (2008)</li>
-            <li><strong>Fellowship:</strong> Cardiology - Cleveland Clinic (2011)</li>
-            <li><strong>Board Certification:</strong> American Board of Internal Medicine - Cardiovascular Disease</li>
+            <li className="animate-fadeInLeft animate-delay-1"><strong>Medical Degree:</strong> Harvard Medical School (2005)</li>
+            <li className="animate-fadeInLeft animate-delay-2"><strong>Residency:</strong> Internal Medicine - Johns Hopkins Hospital (2008)</li>
+            <li className="animate-fadeInLeft animate-delay-3"><strong>Fellowship:</strong> Cardiology - Cleveland Clinic (2011)</li>
+            <li className="animate-fadeInLeft animate-delay-4"><strong>Board Certification:</strong> American Board of Internal Medicine - Cardiovascular Disease</li>
           </ul>
         </div>
 
-        <div className="content-section specialties-section">
-          <h3><i className="fas fa-heart"></i> Specialties & Services</h3>
+        <div className="content-section specialties-section animate-on-scroll" id="specialties-section">
+          <h3><i className="fas fa-heart animate-pulse"></i> Specialties & Services</h3>
           <div className="specialties-grid">
-            <div className="specialty-item specialty-1">
-              <i className="fas fa-heart"></i>
+            <div className="specialty-item specialty-1 animate-bounceIn animate-delay-1">
+              <i className="fas fa-heart animate-pulse"></i>
               <span>Interventional Cardiology</span>
             </div>
-            <div className="specialty-item specialty-2">
-              <i className="fas fa-heartbeat"></i>
+            <div className="specialty-item specialty-2 animate-bounceIn animate-delay-2">
+              <i className="fas fa-heartbeat animate-pulse"></i>
               <span>Heart Failure Management</span>
             </div>
-            <div className="specialty-item specialty-3">
-              <i className="fas fa-shield-alt"></i>
+            <div className="specialty-item specialty-3 animate-bounceIn animate-delay-3">
+              <i className="fas fa-shield-alt animate-pulse"></i>
               <span>Preventive Cardiology</span>
             </div>
-            <div className="specialty-item specialty-4">
-              <i className="fas fa-chart-line"></i>
+            <div className="specialty-item specialty-4 animate-bounceIn animate-delay-4">
+              <i className="fas fa-chart-line animate-pulse"></i>
               <span>Cardiac Risk Assessment</span>
             </div>
-            <div className="specialty-item specialty-5">
-              <i className="fas fa-procedures"></i>
+            <div className="specialty-item specialty-5 animate-bounceIn animate-delay-5">
+              <i className="fas fa-procedures animate-pulse"></i>
               <span>Angioplasty & Stenting</span>
             </div>
-            <div className="specialty-item specialty-6">
-              <i className="fas fa-ambulance"></i>
+            <div className="specialty-item specialty-6 animate-bounceIn animate-delay-6">
+              <i className="fas fa-ambulance animate-pulse"></i>
               <span>Emergency Cardiac Care</span>
             </div>
           </div>
         </div>
 
-        <div className="content-section specialties-image-section">
-          <div className="specialties-image-container">
+        <div className="content-section specialties-image-section animate-on-scroll" id="specialties-image-section">
+          <div className="specialties-image-container animate-scaleIn">
             <img 
               src="https://res.cloudinary.com/dvybb2xnc/image/upload/v1758178960/Screenshot_2025-09-18_095851_llf8tv.png" 
               alt="Medical Services" 
-              className="specialties-image"
+              className="specialties-image animate-float"
             />
           </div>
         </div>
 
-        <div className="content-section reviews-section">
-          <h3><i className="fas fa-users"></i> Patient Reviews</h3>
+        <div className="content-section reviews-section animate-on-scroll" id="reviews-section">
+          <h3><i className="fas fa-users animate-pulse"></i> Patient Reviews</h3>
           <div className="reviews-slider">
             <div className="reviews-container">
               <div className="review-card">
@@ -492,12 +523,12 @@ const DoctorProfile = () => {
           </div>
         </div>
 
-        <div className="content-section awards-section">
-          <h3><i className="fas fa-award"></i> Awards & Recognition</h3>
+        <div className="content-section awards-section animate-on-scroll" id="awards-section">
+          <h3><i className="fas fa-award animate-pulse"></i> Awards & Recognition</h3>
           <div className="awards-grid">
-            <div className="award-card">
+            <div className="award-card animate-scaleIn animate-delay-1">
               <div className="award-icon">
-                <i className="fas fa-trophy"></i>
+                <i className="fas fa-trophy animate-pulse"></i>
               </div>
               <div className="award-content">
                 <h4>Top Doctor Award</h4>
@@ -505,9 +536,9 @@ const DoctorProfile = () => {
               </div>
             </div>
             
-            <div className="award-card">
+            <div className="award-card animate-scaleIn animate-delay-2">
               <div className="award-icon">
-                <i className="fas fa-heart"></i>
+                <i className="fas fa-heart animate-pulse"></i>
               </div>
               <div className="award-content">
                 <h4>Patient Choice Award</h4>
@@ -515,9 +546,9 @@ const DoctorProfile = () => {
               </div>
             </div>
             
-            <div className="award-card">
+            <div className="award-card animate-scaleIn animate-delay-3">
               <div className="award-icon">
-                <i className="fas fa-medal"></i>
+                <i className="fas fa-medal animate-pulse"></i>
               </div>
               <div className="award-content">
                 <h4>Excellence in Cardiovascular Care</h4>
@@ -525,9 +556,9 @@ const DoctorProfile = () => {
               </div>
             </div>
             
-            <div className="award-card">
+            <div className="award-card animate-scaleIn animate-delay-4">
               <div className="award-icon">
-                <i className="fas fa-microscope"></i>
+                <i className="fas fa-microscope animate-pulse"></i>
               </div>
               <div className="award-content">
                 <h4>Outstanding Clinical Research</h4>
@@ -537,22 +568,22 @@ const DoctorProfile = () => {
           </div>
         </div>
 
-        <div className="content-section">
-          <h3><i className="fas fa-calendar-alt"></i> Book Appointment</h3>
+        <div className="content-section animate-on-scroll" id="appointment-section">
+          <h3><i className="fas fa-calendar-alt animate-pulse"></i> Book Appointment</h3>
           <div className="appointment-options">
             <button 
-              className="appointment-btn primary"
+              className="appointment-btn primary animate-bounceIn animate-delay-1"
               onClick={() => setShowAppointmentModal(true)}
             >
-              <i className="fas fa-calendar-plus"></i>
+              <i className="fas fa-calendar-plus animate-pulse"></i>
               Book Online
             </button>
-            <button className="appointment-btn secondary">
-              <i className="fas fa-phone"></i>
+            <button className="appointment-btn secondary animate-bounceIn animate-delay-2">
+              <i className="fas fa-phone animate-pulse"></i>
               Call Now
             </button>
           </div>
-          <p className="appointment-note">
+          <p className="appointment-note animate-fadeInUp animate-delay-3">
             Same-day appointments available for urgent cases. 
             Most insurance plans accepted.
           </p>
@@ -561,11 +592,11 @@ const DoctorProfile = () => {
 
       {/* Appointment Booking Modal */}
       {showAppointmentModal && (
-        <div className="modal-overlay" onClick={closeModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
-              <h2><i className="fas fa-calendar-plus"></i> Book Your Appointment</h2>
-              <button className="modal-close" onClick={closeModal}>
+        <div className="modal-overlay animate-fadeIn" onClick={closeModal}>
+          <div className="modal-content animate-scaleIn" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header animate-fadeInDown">
+              <h2><i className="fas fa-calendar-plus animate-pulse"></i> Book Your Appointment</h2>
+              <button className="modal-close animate-bounceIn" onClick={closeModal}>
                 <i className="fas fa-times"></i>
               </button>
             </div>

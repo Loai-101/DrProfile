@@ -10,7 +10,7 @@ module.exports = (env, argv) => {
       path: path.resolve(__dirname, 'dist'),
       filename: isProduction ? '[name].[contenthash].js' : 'bundle.js',
       clean: true,
-      publicPath: '/',
+      publicPath: isProduction ? '/' : '/',
     },
   module: {
     rules: [
@@ -49,12 +49,13 @@ module.exports = (env, argv) => {
     ],
     devServer: {
       static: {
-        directory: path.join(__dirname, 'public'),
+        directory: path.join(__dirname, 'dist'),
       },
       compress: true,
-      port: 3000,
+      port: 3001,
       open: true,
       historyApiFallback: true,
+      hot: true,
     },
     resolve: {
       extensions: ['.js', '.jsx'],
