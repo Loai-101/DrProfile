@@ -32,15 +32,60 @@ const DoctorProfile = () => {
   };
 
   useEffect(() => {
+    // Ensure loading state is properly set on mount
+    setIsLoading(true);
+    
     // Scroll to top on page load/refresh
     window.scrollTo(0, 0);
     
-    // Loading page timer - 2 seconds
-    const loadingTimer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
+    // Handle different loading scenarios
+    const handleLoading = () => {
+      setIsLoading(true);
+      // Ensure minimum loading time of 1.5 seconds for better UX
+      const minLoadingTime = 1500;
+      const loadingTimer = setTimeout(() => {
+        setIsLoading(false);
+      }, Math.max(minLoadingTime, 2000));
+      return loadingTimer;
+    };
 
-    return () => clearTimeout(loadingTimer);
+    // Initial loading
+    let loadingTimer = handleLoading();
+
+    // Handle page visibility change (when user switches tabs and comes back)
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        clearTimeout(loadingTimer);
+        loadingTimer = handleLoading();
+      }
+    };
+
+    // Handle page focus (when user clicks back to the tab)
+    const handleFocus = () => {
+      clearTimeout(loadingTimer);
+      loadingTimer = handleLoading();
+    };
+
+    // Handle page show (when user navigates back/forward or refreshes)
+    const handlePageShow = (event) => {
+      // Show loading on page show, especially for back/forward navigation
+      if (event.persisted) {
+        clearTimeout(loadingTimer);
+        loadingTimer = handleLoading();
+      }
+    };
+
+    // Add event listeners
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('focus', handleFocus);
+    window.addEventListener('pageshow', handlePageShow);
+
+    return () => {
+      clearTimeout(loadingTimer);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('focus', handleFocus);
+      window.removeEventListener('pageshow', handlePageShow);
+    };
   }, []);
 
   // Handle page refresh and navigation
@@ -51,6 +96,11 @@ const DoctorProfile = () => {
 
     const handleLoad = () => {
       window.scrollTo(0, 0);
+      // Ensure loading shows on page load/refresh
+      setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
     };
 
     // Add event listeners
@@ -199,17 +249,15 @@ const DoctorProfile = () => {
 
   return (
     <div className="doctor-profile">
-      {isLoading && (
-        <div className="loading-page">
-          <div className="loading-content">
-            <img 
-              src="https://res.cloudinary.com/dvybb2xnc/image/upload/v1758180336/%D8%AA%D8%B5%D9%85%D9%8A%D9%85_%D8%A8%D9%88%D8%B3%D8%AA_%D8%A7%D9%86%D8%B3%D8%AA%D8%AC%D8%B1%D8%A7%D9%85_%D8%B9%D9%86_%D8%B9%D8%B1%D9%88%D8%B6_%D8%B9%D9%8A%D8%A7%D8%AF%D8%A7%D8%AA_%D8%A7%D9%84%D8%AA%D8%AC%D9%85%D9%8A%D9%84_%D8%A8%D8%B3%D9%8A%D8%B7_jnj0ss.png" 
-              alt="Loading..." 
-              className="loading-image"
-            />
-          </div>
+      <div className={`loading-page ${!isLoading ? 'fade-out' : ''}`}>
+        <div className="loading-content">
+          <img 
+            src="https://res.cloudinary.com/dvybb2xnc/image/upload/v1758180336/%D8%AA%D8%B5%D9%85%D9%8A%D9%85_%D8%A8%D9%88%D8%B3%D8%AA_%D8%A7%D9%86%D8%B3%D8%AA%D8%AC%D8%B1%D8%A7%D9%85_%D8%B9%D9%86_%D8%B9%D8%B1%D9%88%D8%B6_%D8%B9%D9%8A%D8%A7%D8%AF%D8%A7%D8%AA_%D8%A7%D9%84%D8%AA%D8%AC%D9%85%D9%8A%D9%84_%D8%A8%D8%B3%D9%8A%D8%B7_jnj0ss.png" 
+            alt="Loading..." 
+            className="loading-image"
+          />
         </div>
-      )}
+      </div>
 
           <div className="profile-header animate-fadeIn">
             <div className="profile-info animate-fadeInUp animate-delay-1">
