@@ -1,0 +1,41 @@
+{
+  "name": "drprofile",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack serve --mode development",
+    "start": "webpack serve --mode development",
+    "build": "webpack --mode production",
+    "preview": "webpack serve --mode production",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Loai-101/DrProfile.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Loai-101/DrProfile/issues"
+  },
+  "homepage": "https://github.com/Loai-101/DrProfile#readme",
+  "description": "",
+  "dependencies": {
+    "@emailjs/browser": "^4.4.1",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.4",
+    "@babel/preset-env": "^7.28.3",
+    "@babel/preset-react": "^7.27.1",
+    "babel-loader": "^10.0.0",
+    "css-loader": "^7.1.2",
+    "html-webpack-plugin": "^5.6.4",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.101.3",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.2"
+  }
+}
