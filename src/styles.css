@@ -1470,6 +1470,35 @@ body {
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+  /* Tablet and large mobile adjustments */
+  .profile-header {
+    padding: 50px 30px;
+  }
+  
+  .profile-info h1 {
+    font-size: 2.8rem;
+  }
+  
+  .contact-info {
+    flex-wrap: wrap;
+    gap: 20px;
+    min-width: auto;
+  }
+  
+  .stats-dashboard {
+    gap: 25px;
+  }
+  
+  .about-content {
+    gap: 40px;
+  }
+  
+  .blood-test-content {
+    gap: 50px;
+  }
+}
+
 @media (max-width: 768px) {
   .App {
     padding: 0;
@@ -1478,31 +1507,162 @@ body {
   .profile-header {
     flex-direction: column;
     text-align: center;
-    padding: 60px 20px;
-    gap: 40px;
+    padding: 40px 20px;
+    gap: 30px;
     min-height: auto;
+    background-position: center 30%;
   }
   
-  .profile-image img {
-    width: 200px;
-    height: 200px;
-    filter: brightness(1.1) contrast(1.1) saturate(1.1);
+  .profile-info {
+    padding-left: 0;
+    max-width: 100%;
   }
   
   .profile-info h1 {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .profile-info h2 {
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+  }
+  
+  .profile-info .specialty {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    padding: 10px 15px;
+  }
+  
+  /* Fix contact info mobile layout */
+  .contact-info {
+    flex-direction: column;
+    gap: 15px;
+    min-width: auto;
+    max-width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+  }
+  
+  .contact-info p {
+    white-space: normal;
+    text-align: center;
+    font-size: 0.9rem;
+    padding: 8px 0;
   }
   
   .profile-content {
-    padding: 60px 20px;
+    padding: 40px 20px;
   }
   
   .content-section {
-    margin-bottom: 60px;
+    margin-bottom: 50px;
   }
   
   .content-section h3 {
     font-size: 1.8rem;
+  }
+  
+  /* Fix moving bar for mobile */
+  .moving-bar {
+    height: 50px;
+  }
+  
+  .moving-text {
+    font-size: 1rem;
+    letter-spacing: 1px;
+  }
+  
+  /* Fix stats dashboard for mobile */
+  .stats-dashboard {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .stat-card {
+    padding: 25px 15px;
+    min-width: auto;
+  }
+  
+  .stat-number {
+    font-size: 2.5rem;
+  }
+  
+  .stat-label {
+    font-size: 0.8rem;
+  }
+  
+  /* Fix about section mobile */
+  .about-content {
+    flex-direction: column;
+    min-height: auto;
+  }
+  
+  .about-text {
+    padding: 30px 20px;
+  }
+  
+  .about-text h3 {
+    font-size: 2rem;
+  }
+  
+  .about-image {
+    padding: 20px;
+    min-height: 250px;
+  }
+  
+  .medical-image {
+    max-height: 200px;
+  }
+  
+  /* Fix blood test section mobile */
+  .blood-test-content {
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .blood-test-benefits {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .blood-test-img {
+    max-height: 250px;
+  }
+  
+  /* Fix reviews slider mobile */
+  .reviews-section {
+    padding: 20px;
+    margin: 20px 0;
+  }
+  
+  .reviews-container {
+    width: calc(10 * 280px + 9 * 15px);
+  }
+  
+  .review-card {
+    flex: 0 0 280px;
+    padding: 20px;
+  }
+  
+  @keyframes slideReviews {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-280px * 10 - 15px * 9));
+    }
+  }
+  
+  /* Fix awards section mobile */
+  .awards-grid {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .award-card {
+    min-height: auto;
+    padding: 20px;
   }
   
   .specialties-grid {
@@ -1518,6 +1678,8 @@ body {
   .appointment-btn {
     width: 100%;
     min-width: auto;
+    padding: 15px 25px;
+    font-size: 1rem;
   }
   
   .modal-content {
@@ -1559,90 +1721,204 @@ body {
 
 @media (max-width: 480px) {
   .profile-header {
-    padding: 40px 15px;
+    padding: 30px 15px;
+    gap: 20px;
   }
   
   .profile-info h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
+    line-height: 1.2;
   }
   
   .profile-info h2 {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
+  }
+  
+  .profile-info .specialty {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+  }
+  
+  .contact-info {
+    padding: 12px;
+    gap: 12px;
+  }
+  
+  .contact-info p {
+    font-size: 0.85rem;
   }
   
   .profile-content {
-    padding: 40px 15px;
+    padding: 30px 15px;
+  }
+  
+  .content-section {
+    margin-bottom: 40px;
   }
   
   .content-section h3 {
+    font-size: 1.4rem;
+  }
+  
+  /* Fix moving bar for very small screens */
+  .moving-bar {
+    height: 45px;
+  }
+  
+  .moving-text {
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+  }
+  
+  /* Fix stats for very small screens */
+  .stat-card {
+    padding: 20px 12px;
+  }
+  
+  .stat-number {
+    font-size: 2rem;
+  }
+  
+  .stat-label {
+    font-size: 0.75rem;
+  }
+  
+  /* About section for very small screens */
+  .about-text {
+    padding: 25px 15px;
+  }
+  
+  .about-text h3 {
+    font-size: 1.6rem;
+  }
+  
+  .about-text p {
+    font-size: 1rem;
+  }
+  
+  .about-image {
+    padding: 15px;
+    min-height: 200px;
+  }
+  
+  .medical-image {
+    max-height: 150px;
+  }
+  
+  /* Blood test section for very small screens */
+  .blood-test-text h3 {
+    font-size: 1.6rem;
+  }
+  
+  .blood-test-text p {
+    font-size: 1rem;
+  }
+  
+  .blood-test-img {
+    max-height: 200px;
+  }
+  
+  /* Reviews for very small screens */
+  .reviews-container {
+    width: calc(10 * 250px + 9 * 10px);
+  }
+  
+  .review-card {
+    flex: 0 0 250px;
+    padding: 15px;
+  }
+  
+  @keyframes slideReviews {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-250px * 10 - 10px * 9));
+    }
+  }
+  
+  /* Awards for very small screens */
+  .award-card {
+    padding: 15px;
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+  
+  .award-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+  
+  .award-content h4 {
+    font-size: 1rem;
+  }
+  
+  .award-content p {
+    font-size: 0.85rem;
+  }
+  
+  /* Specialties for very small screens */
+  .specialty-item {
+    padding: 15px;
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+  
+  .specialty-item i {
     font-size: 1.5rem;
   }
   
-  .specialty-item {
-    padding: 20px;
+  .specialty-item span {
+    font-size: 1rem;
   }
   
-  .review {
-    padding: 25px;
-  }
-
-  /* About Section Responsive */
-  .about-content {
-    flex-direction: column;
-    min-height: auto;
-  }
-
-  .about-text {
-    padding: 40px 30px;
-  }
-
-  .about-text h3 {
-    font-size: 2rem;
-  }
-
-  .about-image {
-    padding: 30px 20px;
-    min-height: 300px;
-  }
-
-  .medical-image {
-    max-height: 250px;
-  }
-
-  /* Blood Test Section Responsive */
-  .blood-test-content {
-    flex-direction: column;
-    gap: 40px;
-  }
-
-  .blood-test-benefits {
-    grid-template-columns: 1fr;
-  }
-
-  .blood-test-img {
-    max-height: 300px;
-  }
-
-  /* Specialties Image Responsive */
+  /* Specialties image for very small screens */
   .specialties-image {
-    max-height: 60vh;
+    max-height: 50vh;
   }
-
-  /* Stats Dashboard Responsive */
-  .stats-dashboard {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
+  
+  /* Appointment buttons for very small screens */
+  .appointment-btn {
+    padding: 12px 20px;
+    font-size: 0.9rem;
   }
-
-  .stat-card {
-    padding: 30px 20px;
+  
+  .appointment-note {
+    padding: 15px;
+    font-size: 1rem;
   }
-
-  .stat-number {
-    font-size: 2.5rem;
+  
+  /* Modal for very small screens */
+  .modal-content {
+    width: 98%;
+    margin: 10px;
   }
-
-  .stat-label {
-    font-size: 0.8rem;
+  
+  .modal-header {
+    padding: 15px;
+  }
+  
+  .modal-header h2 {
+    font-size: 1.2rem;
+  }
+  
+  .appointment-form {
+    padding: 15px;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 12px;
+    font-size: 0.9rem;
+  }
+  
+  .btn-cancel,
+  .btn-submit {
+    padding: 12px 20px;
+    font-size: 0.9rem;
   }
 }
