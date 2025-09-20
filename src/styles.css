@@ -358,6 +358,8 @@ body {
   opacity: 1;
   visibility: visible;
   animation: none;
+  transform: translateY(0);
+  transition: none;
 }
 
 .moving-text {
@@ -373,6 +375,9 @@ body {
   font-family: 'Georgia', serif;
   letter-spacing: 2px;
   will-change: transform;
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(100%);
 }
 
 @keyframes moveText {

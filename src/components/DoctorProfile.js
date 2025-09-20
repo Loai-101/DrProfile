@@ -272,7 +272,7 @@ const DoctorProfile = () => {
             </div>
           </div>
 
-      <div className="moving-bar animate-slideInDown">
+      <div className="moving-bar">
         <div className="moving-text animate-shimmer">A healthy heart is the key to a long and active life. • Taking care of your heart today prevents problems tomorrow. • Heart health is the foundation of overall wellness. • Regular check-ups help keep your heart strong and safe. • Small lifestyle changes can make a big difference for your heart. • Protect your heart to protect your future. • Early detection saves lives — don't ignore heart symptoms. • Exercise and a balanced diet keep your heart in rhythm. • Stress management is essential for a healthy heart. • Your heart works for you every second — give it the care it deserves.</div>
       </div>
 
