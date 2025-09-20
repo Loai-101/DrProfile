@@ -32,12 +32,36 @@ const DoctorProfile = () => {
   };
 
   useEffect(() => {
+    // Scroll to top on page load/refresh
+    window.scrollTo(0, 0);
+    
     // Loading page timer - 2 seconds
     const loadingTimer = setTimeout(() => {
       setIsLoading(false);
     }, 2000);
 
     return () => clearTimeout(loadingTimer);
+  }, []);
+
+  // Handle page refresh and navigation
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      window.scrollTo(0, 0);
+    };
+
+    const handleLoad = () => {
+      window.scrollTo(0, 0);
+    };
+
+    // Add event listeners
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener('load', handleLoad);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener('load', handleLoad);
+    };
   }, []);
 
   // Scroll animation observer
